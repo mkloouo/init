@@ -1,0 +1,3 @@
+lsblk
+# fdisk -l
+# parted -l

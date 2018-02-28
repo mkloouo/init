@@ -1,0 +1,4 @@
+dig + IP
+nslookup + IP
+
+type in 4 column (i.e. A, NS etc)
