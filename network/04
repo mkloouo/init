@@ -1,1 +1,1 @@
-xnetstat -nr | grep default | awk '{print $2}'
+netstat -nr | grep default | awk '{print $2}'

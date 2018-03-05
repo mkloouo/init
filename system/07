@@ -1,1 +1,0 @@
-ps -aux | grep /usr/bin/sshd | awk '{print $2}'

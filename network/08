@@ -1,1 +1,6 @@
-ping -c 1 slash16.org | grep PING | cut -d ' ' -f 3 | sed 's/[():]//g' | xargs whois | grep "OrgName: "
+1) ping -c 1 slash16.org
+--> 52.85.221.86
+2) whois 52.85.221.86
+3) OrgName is a field with wanted provider
+   whois 52.85.221.86 | grep OrgName:
+   OrgName:        Amazon Technologies Inc.
