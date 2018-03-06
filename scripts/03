@@ -1,0 +1,4 @@
+if [ -d $1 ]
+then
+	ls -larS $1 | grep '^-'
+fi

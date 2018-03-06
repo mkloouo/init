@@ -1,0 +1,9 @@
+сrontab -l > cronfile
+echo "0 0 * * * \
+	MD1=\"\$(md5sum /etc/crontab | awk {'print \$1'})\" && \
+	MD2=\"\$(cat /etc/crontab.log 2>/dev/null)\" && \
+	if [ '\$MD1' != '\$MD2' ] ; then \
+		md5sum /etc/crontab | awk '{ print \$1 }' > /etc/crontab.log && \
+		echo \"/etc/crontab modifier le \$(date)\" | mail -s \"/etc/crontab modifier\" root ; fi" >> cronfile
+crontab cronfile
+rm cronfile
