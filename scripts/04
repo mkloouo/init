@@ -1,9 +1,24 @@
-сrontab -l > cronfile
-echo "0 0 * * * \
-	MD1=\"\$(md5sum /etc/crontab | awk {'print \$1'})\" && \
-	MD2=\"\$(cat /etc/crontab.log 2>/dev/null)\" && \
-	if [ '\$MD1' != '\$MD2' ] ; then \
-		md5sum /etc/crontab | awk '{ print \$1 }' > /etc/crontab.log && \
-		echo \"/etc/crontab modifier le \$(date)\" | mail -s \"/etc/crontab modifier\" root ; fi" >> cronfile
-crontab cronfile
-rm cronfile
+#!/bin/bash
+
+cron_task=`crontab -l -u $USER | grep "cron_monitor.bash"`
+if [[ -z ${cron_task// } ]]
+then
+	echo "0 0 * * * bash $HOME/cron_monitor.bash" > $HOME/temp
+	crontab -l -u $USER | cat - $HOME/temp | crontab -u $USER -
+	rm -fR $HOME/temp
+fi
+
+backup="$HOME/.crontab.bac"
+md1=`md5sum /etc/crontab | awk '{print $1}'`
+if [[ -e "$backup" ]]
+then
+	md2=`md5sum $backup | awk '{print $1}'`
+				if [[ "$md1" = "$md2" ]]
+				then
+					cp /etc/crontab $backup
+				else
+					echo "/etc/crontab was modified on $(date)" | mail -s "/etc/crontab modifications" root;
+				fi
+else
+	cp /etc/crontab $backup
+fi

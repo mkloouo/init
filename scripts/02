@@ -1,2 +1,12 @@
-apt update > /var/log/update_script.log
-apt upgrade >> /var/log/update_script.log
+#!/bin/bash
+
+cron_task=`crontab -l -u $USER | grep "update_script.bash"`
+if [[ "$cron_task" = "" ]]
+then
+	echo "0 4 * * 1 bash $HOME/update_script.bash" > $HOME/temp
+	crontab -l -u $USER | cat - $HOME/temp | crontab -u $USER -
+	rm -fR $HOME/temp
+fi
+
+log="/var/log/update_script.log"
+apt-get -y update > $log && apt-get -y upgrade >> $log;

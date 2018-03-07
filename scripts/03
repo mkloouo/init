@@ -1,4 +1,11 @@
-if [ -d $1 ]
+#!/bin/bash
+
+if [[ -d $1 ]]
 then
-	ls -larS $1 | grep '^-'
+	ls -arpS $1 | grep -v / | tr '\n' ' ' | sed 's/ $/\n/'
+elif [[ "$1" = "" ]]
+then
+	echo "usage: bash $0 DIR"
+else
+	echo "$1 is not a directory"
 fi

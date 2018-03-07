@@ -1,1 +1,1 @@
-networksetup -listallhardwareports | grep -A 1 "Hardware Port: Ethernet" | grep "Device" | cut -d ' ' -f 2 | xargs ipconfig getifaddr
+ipconfig getifaddr en0

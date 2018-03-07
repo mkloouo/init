@@ -1,1 +1,4 @@
-/etc/hostname
+You can use utility hostnamectl, or manually change (create)
+file /etc/hostname, where you need to fill in your hostname.
+Also, with this done, you are to swap in /etc/hosts every
+occurance of past hostname with the new one.
